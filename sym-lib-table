@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name rc-256page)(type Legacy)(uri ${KIPRJMOD}/rc-256page.lib)(options "")(descr ""))
+)
