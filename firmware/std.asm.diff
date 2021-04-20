@@ -1,0 +1,12 @@
+diff --git a/Source/HBIOS/std.asm b/Source/HBIOS/std.asm
+index fd257f6d..68f8be30 100644
+--- a/Source/HBIOS/std.asm
++++ b/Source/HBIOS/std.asm
+@@ -84,6 +84,7 @@ MM_N8		.EQU	3		; Z180 CUSTOMIZED FOR N8 MEMORY EXTENSIONS
+ MM_Z180		.EQU	4		; Z180 NATIVE MEMORY MANAGER
+ MM_Z280		.EQU	5		; Z280 NATIVE MEMORY MANAGER
+ MM_ZRC		.EQU	6		; ZRC BANK SWITCHING
++MM_PD		.EQU	7		; PD BANK SWITCHING
+ ;
+ ; BOOT STYLE
+ ;

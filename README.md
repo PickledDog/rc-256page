@@ -12,24 +12,10 @@ For ROM, a SST39SF010 128k x 8 flash chip is used. It can be programmed in-place
 Upon reset, ROM page 0 is mapped to both the lower **and** upper 32k (initialization code in page 0 *must* select a RAM page for normal operation). A single config register is used to set **both** currently mapped pages, presented as an I/O device at 0x78 (the address used by most "large" Z80 memory systems). The low nibble of this configures the lower page, and the high nibble the higher page. For each nibble, the high bit selects the chip (0 for ROM, 1 for RAM).
 
 ## Firmware
-This board is presented as a programming challenge for adventurous RC2014 builders, who want an inexpensive way to add fully software-pageable memory to their computers. As such, *there are currently no ROM images for this board* (although a RomWBW image is being worked on - see below). None of the standard RC2014 ROM images can be used as-is. Building a ROM image (or modifying an existing one) is left up to the user.
+This board can be used as an affordable way to add [RomWBW](https://github.com/wwarthen/RomWBW) support to an RC2014 (see below). It is also presented as a programming challenge for adventurous RC2014 builders, who want an inexpensive way to add fully software-pageable memory to their computers. Beyond RomWBW, *there are currently no standard ROM images for this board* (that is, no BASIC ROM etc). None of the standard RC2014 ROM images can be used as-is. Building a ROM image (or modifying an existing one) is left up to the user.
 
 ### RomWBW
-This board is confirmed compatible with [RomWBW](https://github.com/wwarthen/RomWBW). As such, this may be the cheapest way to add RomWBW support to an RC2014. A new memory mapper needs to be added; I have a working build and am working on a patch. In the meantime, here is the block of code I'm adding to `HBX_BNKSEL` in `Source/HBIOS/hbios.asm`:
-```
-#IF (MEMMGR == MM_PD)
-	BIT	7,A			; BIT 7 SET REQUESTS RAM PAGE
-	JR	Z,HBX_ROM		; NOT SET, SELECT ROM PAGE
-	ADD	A,$08			; ADD 8 x 32K - RAM STARTS FROM 256K
-;
-HBX_ROM:
-	OR	$F0			; SET HIGH NIBBLE TO TOP RAM
-	OUT	($MPGSEL),A		; WRITE TO PAGING REGISTER
-	RET				; DONE
-#ENDIF
-;
-```
-You also need to add initialization code to `HB_START` (need to page in the RAM), the name of the memory manager to the CPU config display code, and to define the `MM_PD` symbol in `Source/HBIOS/std.asm`.
+For RomWBW, a new memory mapper needs to be added. A patch file to do this can be found in the [firmware](/firmware) directory (along with an example image).
 
 ## Part selection
 Bill Of Materials and part references are below. I recommend using gold-plated header for the bus connection - I use these ones from [Pololu](https://www.pololu.com/product/967) or [Sparkfun](https://www.sparkfun.com/products/553). A nice detail of these, is that they sit at the same height as double-row header in a backplane.

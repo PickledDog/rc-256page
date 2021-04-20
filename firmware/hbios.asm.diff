@@ -1,0 +1,47 @@
+diff --git a/Source/HBIOS/hbios.asm b/Source/HBIOS/hbios.asm
+index a5e0cd49..866dac55 100644
+--- a/Source/HBIOS/hbios.asm
++++ b/Source/HBIOS/hbios.asm
+@@ -486,6 +486,17 @@ HBX_ROM:
+ 	RET				; DONE
+ #ENDIF
+ ;
++#IF (MEMMGR == MM_PD)
++	BIT	7,A			; BIT 7 SET REQUESTS RAM PAGE
++	JR	Z,HBX_ROM		; NOT SET, SELECT ROM PAGE
++	ADD	A,$08			; ADD 8 x 32K - RAM STARTS FROM 256K
++;
++HBX_ROM:
++	OR	$F0			; SET HIGH NIBBLE TO TOP RAM
++	OUT	($MPGSEL),A		; WRITE TO PAGING REGISTER
++	RET				; DONE
++#ENDIF
++;
+ ;::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ ; Copy Data - Possibly between banks.  This resembles CP/M 3, but
+ ;  usage of the HL and DE registers is reversed.
+@@ -1189,6 +1200,14 @@ Z280_INITZ:
+ 	LD	A,1
+ 	OUT	(MPGENA),A
+ #ENDIF
++;
++#IF (MEMMGR == MM_PD)
++  #IFDEF ROMBOOT
++	; SET PAGING REGISTER
++	LD	A,$F0			; LOW BANK = ROM 0, HIGH BANK = TOP RAM
++	OUT	(MPGSEL),A
++  #ENDIF
++#ENDIF
+ ;
+ 	DIAG(%00000011)
+ 	LED($00)
+@@ -1948,6 +1967,9 @@ HB_Z280BUS1:
+ #ENDIF
+ #IF (MEMMGR == MM_ZRC)
+ 	.TEXT	"ZRC$"
++#ENDIF
++#IF (MEMMGR == MM_PD)
++	.TEXT	"PD$"
+ #ENDIF
+ 	CALL	PRTSTRD
+ 	.TEXT	" MMU$"
