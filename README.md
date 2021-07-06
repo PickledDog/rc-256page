@@ -26,6 +26,7 @@ The specified parts are just the ones I used, and can be substituted as needed -
 | --------- | ----- | --- | ----------- |
 | C1-C5 | 100nF ceramic | 5 | [KEMET C315C104M5U5TA](https://www.mouser.com/ProductDetail/C315C104M5U5TA7303) |
 | J1 | 1x40 right-angle header | 1 | [Wurth 61304011021](https://www.mouser.com/ProductDetail/61304011021) |
+| R1 | 4k7Ω resistor | 1 | [Yageo CFR-25JT-52-4K7](https://www.mouser.com/ProductDetail/CFR-25JT-52-4K7) |
 | U1 | SST39SF010 NOR flash | 1 | [Microchip SST39SF010A-70-4C-PHE](https://www.mouser.com/ProductDetail/SST39SF010A-70-4C-PHE) |
 | U2 | AS6C1008 SRAM | 1 | [Alliance AS6C1008-55PCN](https://www.mouser.com/ProductDetail/AS6C1008-55PCN) |
 | | sockets | 2 | [Amphenol DILB32P-223TLF](https://www.mouser.com/ProductDetail/DILB32P-223TLF) |
